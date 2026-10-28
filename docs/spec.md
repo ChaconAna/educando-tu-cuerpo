@@ -14,17 +14,17 @@ El sistema tendrá dos tipos de usuarios:
 ### 1.1. Funcionamiento general
 
 1. La profesora registra un alumno en el sistema.
-2. Crea una rutina personalizada, definiendo su fecha de inicio, duración en semanas y cantidad de días de entrenamiento por semana.
+2. Crea una rutina personalizada, definiendo su fecha de inicio, cantidad de semanas de planificación y cantidad de estímulos requeridos por semana.
 3. Selecciona ejercicios de la biblioteca o crea nuevos ejercicios cuando sea necesario.
 4. Organiza los ejercicios en días de entrenamiento y bloques, configurando sus series y repeticiones.
 5. Puede modificar la planificación de cada semana sin tener que volver a cargar todos los ejercicios.
 6. Publica la rutina para que el alumno pueda consultarla.
-7. El alumno accede a la semana correspondiente y visualiza el próximo entrenamiento sugerido.
+7. El alumno accede a la semana de planificación correspondiente según los estímulos completados y puede seleccionar libremente cualquiera de los días de entrenamiento disponibles.
 8. Realiza sus entrenamientos y registra los pesos utilizados en cada serie, sin modificar la planificación.
 9. Finaliza cada entrenamiento mediante el botón **"Finalizar entrenamiento"**.
 10. El sistema guarda los datos del entrenamiento y permite consultar su historial.
 11. La profesora puede asignar pesos sugeridos, registrar o corregir pesos y supervisar el progreso del alumno.
-12. Al finalizar el período de una rutina, esta se conserva en el historial del alumno.
+12. Cuando el alumno completa todos los estímulos de la rutina, esta finaliza automáticamente y se conserva en su historial. Si existe una rutina PROGRAMADA, se activa automáticamente.
 
 ### 1.2. Características principales
 
@@ -33,15 +33,15 @@ El sistema tendrá dos tipos de usuarios:
 - Un alumno podrá permanecer temporalmente sin ninguna rutina ACTIVA, por ejemplo, cuando todavía no tenga una rutina asignada o cuando su última rutina haya finalizado y no exista otra vigente.
 - Las rutinas serán creadas individualmente por la profesora. No existirán rutinas completas precargadas.
 - La duración de cada rutina será configurable entre 1 y 6 semanas.
-- La cantidad de días de entrenamiento por semana será configurable entre 1 y 7.
+- La profesora podrá configurar entre 1 y 7 días de entrenamiento por semana de planificación. Esta cantidad determinará los estímulos necesarios para avanzar a la siguiente semana, aunque el alumno podrá elegir libremente qué día realizar en cada entrenamiento.
 - Las rutinas estarán organizadas por semanas, días de entrenamiento, bloques y ejercicios.
 - Las series y repeticiones podrán variar entre semanas sin necesidad de volver a cargar los ejercicios.
 - La profesora podrá modificar rutinas publicadas sin alterar el historial de entrenamientos finalizados.
 - La profesora podrá asignar pesos sugeridos y el alumno registrar los pesos realmente utilizados.
 - Los alumnos no podrán modificar ejercicios, series ni repeticiones.
 - Cada ejercicio podrá incluir un video explicativo.
-- Los alumnos podrán repetir entrenamientos, incluso durante una misma fecha.
-- Las semanas avanzarán automáticamente por calendario.
+- Los alumnos podrán repetir un mismo día de entrenamiento en fechas diferentes. Cada entrenamiento finalizado contará como un estímulo independiente.
+- Las semanas de planificación avanzarán automáticamente cuando el alumno complete la cantidad de estímulos requerida, independientemente del tiempo calendario transcurrido.
 - Se conservará el historial de rutinas, entrenamientos realizados y pesos registrados.
 - La aplicación tendrá una interfaz sencilla, minimalista y adaptable a celulares.
 - Se utilizará el color bordó del logo de Paulina como identidad visual principal.
@@ -80,11 +80,11 @@ Cada rutina tendrá:
 - Un alumno asignado.
 - Una fecha de inicio.
 - Una duración configurable por la profesora, con un mínimo de 1 y un máximo de 6 semanas.
-- Una cantidad de días de entrenamiento por semana configurable por la profesora, con un mínimo de 1 y un máximo de 7 días.
+- Una cantidad de días de entrenamiento por semana de planificación, configurable por la profesora entre 1 y 7. Esta cantidad determinará los estímulos necesarios para avanzar de semana.
 - Bloques y ejercicios dentro de cada día.
 - Series y repeticiones configurables por semana.
 
-La duración y la cantidad de días de entrenamiento se establecerán individualmente para cada rutina.
+La cantidad de semanas de planificación y de estímulos requeridos por semana se establecerá individualmente para cada rutina. La duración real dependerá del ritmo con el que el alumno complete sus entrenamientos.
 
 Por ejemplo, un alumno podrá tener una rutina de 4 semanas y 2 días por semana, mientras que otro tendrá una de 6 semanas y 4 días por semana.
 
@@ -94,22 +94,35 @@ Estos días representarán entrenamientos diferentes y no estarán necesariament
 
 La profesora podrá copiar la planificación entre semanas y modificar ejercicios, series y repeticiones sin volver a cargar toda la rutina.
 
-Las rutinas no tendrán nombres personalizados. Se identificarán mediante el alumno, su período y la semana correspondiente.
+Las rutinas no tendrán nombres personalizados. Se identificarán mediante el alumno, su fecha de inicio y la planificación correspondiente, sin establecer una fecha de finalización fija.
 
-#### 1.4.1. Avance automático de semanas
+#### 1.4.1. Avance de semanas por estímulos
 
-Las semanas de una rutina avanzarán automáticamente según la fecha de inicio establecida por la profesora.
+Las semanas de una rutina representarán etapas de planificación del entrenamiento y no períodos fijos de siete días calendario.
 
-Cada semana tendrá una duración de siete días consecutivos.
+Cada rutina tendrá una cantidad de estímulos por semana, determinada por la cantidad de días de entrenamiento configurada por la profesora.
 
-- La semana 1 comenzará en la fecha de inicio de la rutina.
-- La semana 2 comenzará siete días después.
-- Las siguientes semanas avanzarán sucesivamente cada siete días.
-- El avance semanal no dependerá de la cantidad de entrenamientos completados.
-- Los entrenamientos no realizados no impedirán el avance a la siguiente semana.
-- Repetir un entrenamiento no modificará el avance semanal.
+Se considerará **estímulo completado** a cada entrenamiento que haya sido finalizado correctamente, mediante la acción "Finalizar entrenamiento".
 
-La aplicación mostrará automáticamente la semana correspondiente según la fecha actual y la fecha de inicio de la rutina.
+Se aplicarán las siguientes reglas:
+
+- Cada entrenamiento finalizado contará como un estímulo completado.
+- Los entrenamientos en estado EN_CURSO no contarán como estímulos completados.
+- El alumno podrá seleccionar libremente cualquiera de los días de entrenamiento disponibles en su semana actual.
+- El alumno podrá repetir un mismo día de entrenamiento en fechas diferentes.
+- Las repeticiones de un mismo día también contarán como estímulos independientes.
+- El alumno podrá iniciar como máximo un entrenamiento por día calendario, considerando la zona horaria de Argentina.
+- La semana de planificación avanzará automáticamente cuando el alumno complete la cantidad de estímulos requerida.
+- El avance no dependerá de la cantidad de días calendario transcurridos.
+- Los estímulos no completados impedirán avanzar a la siguiente semana de planificación.
+
+Por ejemplo, una rutina de 6 semanas con 2 estímulos por semana tendrá un total de 12 estímulos planificados.
+
+Si el alumno completa únicamente un estímulo durante una semana calendario, continuará en la misma semana de planificación hasta completar el segundo estímulo.
+
+Si realiza dos veces el Día 1 en fechas diferentes, ambas realizaciones contarán como estímulos independientes y permitirán completar esa semana de planificación.
+
+Al completar los estímulos de la última semana, la rutina finalizará automáticamente, según las reglas de finalización y activación de rutinas programadas.
 
 #### 1.4.2. Modificación de rutinas publicadas
 
@@ -125,7 +138,7 @@ La aplicación mostrará al alumno el próximo entrenamiento sugerido de su ruti
 
 El alumno podrá seleccionar cualquiera de los días de entrenamiento disponibles en la semana correspondiente.
 
-Un mismo día de entrenamiento podrá realizarse más de una vez, incluso durante una misma fecha.
+Un mismo día de entrenamiento podrá repetirse en fechas diferentes. Cada alumno podrá iniciar como máximo un entrenamiento por día calendario, considerando la zona horaria `America/Argentina/Buenos_Aires`. Cada entrenamiento finalizado contará como un estímulo independiente, incluso cuando se repita el mismo día de entrenamiento.
 
 Cada realización se registrará de forma independiente, conservando los datos correspondientes.
 
@@ -151,7 +164,9 @@ Al finalizar, el sistema:
 - Conservará la información para el historial y el seguimiento del progreso.
 - Mostrará el próximo entrenamiento sugerido, según la planificación y los entrenamientos completados.
 
-Finalizar un entrenamiento no modificará la semana actual ni impedirá repetir ese mismo día de entrenamiento.
+Cada entrenamiento finalizado sumará un estímulo a la semana de planificación correspondiente. Cuando el alumno complete la cantidad de estímulos requerida, el sistema avanzará automáticamente a la siguiente semana de planificación. Si se completa el último estímulo de la última semana, la rutina finalizará y, si existe una rutina PROGRAMADA, esta se activará automáticamente.
+
+El alumno podrá volver a seleccionar el mismo día de entrenamiento en otra fecha, siempre que pertenezca a la semana de planificación habilitada.
 
 #### 1.5.3. Historial y seguimiento
 
@@ -189,11 +204,12 @@ El MVP deberá permitir completar el proceso principal del sistema: desde el reg
 - Facilitar a la profesora la gestión de sus alumnos.
 - Permitir crear, editar y reutilizar ejercicios mediante una biblioteca dinámica.
 - Permitir crear y modificar rutinas personalizadas para cada alumno.
-- Configurar individualmente la duración de cada rutina, entre 1 y 6 semanas, y la cantidad de días de entrenamiento por semana, entre 1 y 7.
+- Configurar individualmente entre 1 y 6 semanas de planificación y entre 1 y 7 estímulos requeridos por semana, sin establecer una duración fija en días calendario.
 - Organizar las rutinas por semanas, días, bloques y ejercicios.
 - Facilitar la planificación semanal mediante la copia de ejercicios y la modificación de series y repeticiones.
 - Permitir asignar pesos sugeridos y registrar los pesos realmente utilizados.
-- Permitir que los alumnos finalicen y repitan entrenamientos.
+- Permitir que los alumnos finalicen entrenamientos y repitan un mismo día de entrenamiento en fechas diferentes, contabilizando cada sesión finalizada como un estímulo independiente.
+- Avanzar automáticamente entre semanas de planificación según los estímulos completados y permitir que la profesora configure avisos anticipados cuando una rutina esté próxima a finalizar.
 - Conservar el historial de entrenamientos y rutinas.
 - Ofrecer una interfaz sencilla y adaptable a dispositivos móviles.
 
@@ -226,27 +242,33 @@ El MVP deberá permitir completar el proceso principal del sistema: desde el reg
 #### 2.3.4. Gestión de rutinas
 
 - Crear rutinas personalizadas para cada alumno.
-- Definir fecha de inicio, duración en semanas y cantidad de días por semana.
-- Organizar entrenamientos mediante bloques y ejercicios.
+- Definir la fecha de inicio, la cantidad de semanas de planificación y los estímulos requeridos por semana.
+- Organizar entrenamientos mediante días, bloques y ejercicios.
 - Configurar series y repeticiones.
 - Copiar la planificación de una semana a otra.
 - Modificar ejercicios, series y repeticiones de semanas específicas.
-- Guardar rutinas en estado borrador antes de publicarlas.
+- Guardar rutinas en estado BORRADOR antes de publicarlas.
 - Publicar rutinas para que los alumnos puedan acceder a ellas.
+- Preparar rutinas en estado PROGRAMADA para su activación automática al finalizar la rutina activa.
 - Editar rutinas publicadas, conservando los registros históricos.
-- Mantener una única rutina activa por alumno.
+- Mantener como máximo una rutina ACTIVA y una PROGRAMADA por alumno.
+- Permitir que la profesora configure la cantidad de estímulos restantes con la que desea recibir un aviso de próxima finalización de cada rutina, con un valor predeterminado de 3 estímulos.
 
 #### 2.3.5. Consulta y realización de entrenamientos
 
-- Mostrar al alumno la semana correspondiente según la fecha de inicio de su rutina.
-- Mostrar el próximo entrenamiento sugerido.
-- Consultar los días de entrenamiento disponibles.
+- Mostrar al alumno la semana de planificación correspondiente según los estímulos completados.
+- Mostrar el próximo entrenamiento sugerido, sin que sea obligatorio seguir ese orden.
+- Permitir seleccionar libremente cualquiera de los días de entrenamiento disponibles en la semana actual.
 - Visualizar los ejercicios, series, repeticiones y videos explicativos.
 - Registrar los pesos utilizados en cada serie.
-- Finalizar una realización mediante el botón "Finalizar entrenamiento".
-- Permitir repetir un entrenamiento, incluso durante una misma fecha.
-- Guardar cada realización como un registro independiente.
-- Avanzar automáticamente las semanas según el calendario.
+- Permitir iniciar como máximo un entrenamiento por alumno y por día calendario, considerando la zona horaria `America/Argentina/Buenos_Aires`.
+- Finalizar un entrenamiento mediante el botón "Finalizar entrenamiento".
+- Contabilizar cada entrenamiento finalizado como un estímulo completado.
+- Permitir repetir un mismo día de entrenamiento en fechas diferentes, contando cada realización finalizada como un estímulo independiente.
+- Guardar cada realización como un registro independiente, sin sobrescribir entrenamientos anteriores.
+- Mostrar la cantidad de estímulos completados y pendientes de la semana actual y de la rutina.
+- Avanzar automáticamente a la siguiente semana de planificación cuando se complete la cantidad de estímulos requerida.
+- Finalizar automáticamente la rutina al completar todos sus estímulos y activar la próxima rutina PROGRAMADA, si existe.
 
 #### 2.3.6. Registro de pesos y seguimiento
 
@@ -307,15 +329,20 @@ El MVP se considerará funcional cuando sea posible completar correctamente el s
 1. La profesora inicia sesión.
 2. Registra un alumno.
 3. Crea ejercicios nuevos o selecciona ejercicios existentes.
-4. Crea una rutina personalizada con semanas, días, bloques, ejercicios, series y repeticiones.
-5. Publica la rutina.
-6. El alumno inicia sesión y visualiza únicamente su rutina.
-7. El alumno registra los pesos utilizados y finaliza un entrenamiento.
-8. El sistema guarda los datos y permite repetir el entrenamiento sin sobrescribir registros anteriores.
-9. La profesora consulta los entrenamientos realizados y los pesos registrados.
-10. El alumno y la profesora pueden consultar el historial correspondiente.
+4. Crea una rutina personalizada, definiendo semanas de planificación, estímulos requeridos por semana, días de entrenamiento, bloques, ejercicios, series y repeticiones.
+5. Configura la cantidad de estímulos restantes con la que desea recibir un aviso de próxima finalización.
+6. Publica la rutina.
+7. El alumno inicia sesión y visualiza únicamente su rutina activa.
+8. El alumno selecciona libremente un día de entrenamiento, registra los pesos utilizados y finaliza la sesión.
+9. El sistema contabiliza el entrenamiento finalizado como un estímulo completado y conserva su información histórica.
+10. El alumno puede repetir un mismo día de entrenamiento en otra fecha, generando un nuevo registro y un nuevo estímulo.
+11. Al completar los estímulos requeridos de una semana de planificación, el sistema habilita automáticamente la siguiente.
+12. Cuando los estímulos restantes alcanzan el umbral configurado, el sistema muestra un aviso en el panel de la profesora.
+13. La profesora puede preparar una próxima rutina y dejarla en estado PROGRAMADA.
+14. Al completar todos los estímulos de la rutina activa, el sistema la marca como FINALIZADA y activa automáticamente la rutina PROGRAMADA, si existe.
+15. La profesora y el alumno pueden consultar los entrenamientos realizados, los pesos registrados y el historial correspondiente.
 
-Además, deberán verificarse las restricciones de acceso, el avance semanal por calendario y la conservación de los registros históricos al editar una rutina publicada.
+Además, deberán verificarse las restricciones de acceso, el límite de un entrenamiento iniciado por alumno y por día calendario, el avance por estímulos, la activación automática de rutinas programadas y la conservación de los registros históricos al editar una rutina publicada.
 
 
 ## 3. Roles y permisos
@@ -351,7 +378,7 @@ La profesora tendrá acceso a las funcionalidades de administración y gestión 
 **Gestión de rutinas**
 
 - Crear rutinas personalizadas para cada alumno.
-- Configurar su fecha de inicio, duración en semanas y cantidad de días de entrenamiento.
+- Configurar la fecha de inicio, la cantidad de semanas de planificación y los estímulos requeridos por semana.
 - Organizar semanas, días, bloques y ejercicios.
 - Definir y modificar series y repeticiones.
 - Copiar la planificación de una semana a otra.
@@ -359,6 +386,9 @@ La profesora tendrá acceso a las funcionalidades de administración y gestión 
 - Publicar rutinas para los alumnos.
 - Editar rutinas publicadas, conservando los registros históricos.
 - Consultar las rutinas anteriores de cada alumno.
+- Configurar para cada rutina la cantidad de estímulos restantes con la que desea recibir un aviso de próxima finalización, con un valor predeterminado de 3 estímulos.
+- Preparar una próxima rutina en estado PROGRAMADA para que se active automáticamente cuando el alumno complete todos los estímulos de su rutina activa.
+- Consultar el progreso de cada alumno según los estímulos completados y pendientes de su rutina.
 
 **Registro de pesos y seguimiento**
 
@@ -376,7 +406,7 @@ El alumno tendrá acceso únicamente a su información personal de entrenamiento
 **Consulta de rutinas**
 
 - Visualizar su rutina activa.
-- Consultar la semana correspondiente según el calendario.
+- Consultar la semana de planificación correspondiente según los estímulos completados, visualizando cuántos estímulos lleva realizados y cuántos le faltan para avanzar.
 - Visualizar los días de entrenamiento disponibles.
 - Consultar ejercicios, bloques, series y repeticiones.
 - Acceder a los videos explicativos.
@@ -387,7 +417,7 @@ El alumno tendrá acceso únicamente a su información personal de entrenamiento
 - Seleccionar un día de entrenamiento disponible de la semana actual.
 - Registrar los pesos realmente utilizados en cada serie.
 - Finalizar un entrenamiento mediante el botón "Finalizar entrenamiento".
-- Repetir un entrenamiento, incluso durante la misma fecha.
+- Repetir un mismo día de entrenamiento en fechas diferentes, contabilizando cada sesión finalizada como un estímulo independiente y respetando el límite de un entrenamiento iniciado por día calendario.
 - Consultar los entrenamientos que haya realizado.
 - Una vez finalizado un entrenamiento, no podrá modificar los pesos registrados. Cualquier corrección deberá realizarla la profesora.
 
@@ -703,9 +733,10 @@ La profesora podrá crear una nueva rutina desde la ficha individual de un alumn
 Para crearla, deberá configurar:
 
 - **Alumno:** destinatario de la rutina.
-- **Fecha de inicio:** día a partir del cual comenzará la planificación.
-- **Duración:** cantidad de semanas, configurable entre 1 y 6.
-- **Días de entrenamiento:** cantidad de días distintos, configurable entre 1 y 7.
+- Fecha de inicio de la rutina.
+- Cantidad de semanas de planificación, entre 1 y 6.
+- Cantidad de días de entrenamiento disponibles por semana, entre 1 y 7.
+- Cantidad de estímulos requeridos para completar cada semana de planificación, equivalente a la cantidad de días de entrenamiento configurados.
 
 Cada rutina se identificará mediante el alumno al que pertenece y su período de entrenamiento.
 
@@ -713,22 +744,33 @@ No será obligatorio asignar un nombre personalizado a la rutina.
 
 La rutina podrá guardarse como borrador antes de ser publicada.
 
-### 6.2. Organización por semanas
+### 6.2. Organización y avance de semanas de planificación
 
-Cada rutina tendrá entre 1 y 6 semanas de planificación.
+Las rutinas estarán organizadas en semanas de planificación numeradas consecutivamente, desde la semana 1 hasta la cantidad configurada por la profesora, con un máximo de 6 semanas.
 
-Las semanas estarán numeradas consecutivamente:
+Estas semanas no representan períodos fijos de siete días calendario, sino etapas de entrenamiento que el alumno completa según su propio ritmo.
 
-- Semana 1.
-- Semana 2.
-- Semana 3.
-- Y así sucesivamente, hasta la duración configurada.
+**Reglas de avance:**
 
-La semana 1 comenzará en la fecha de inicio establecida.
+- Cada semana de planificación tendrá una cantidad de estímulos requeridos, equivalente a la cantidad de días de entrenamiento configurados para esa rutina.
+- Cada entrenamiento finalizado contabilizará un estímulo para la semana de planificación correspondiente.
+- Los entrenamientos en estado EN_CURSO no contabilizarán estímulos hasta su finalización.
+- El alumno podrá elegir libremente cualquiera de los días de entrenamiento disponibles para la semana actual, sin obligación de seguir un orden.
+- Un mismo día de entrenamiento podrá repetirse en fechas diferentes y cada realización finalizada contará como un estímulo independiente.
+- Solo podrá iniciarse un entrenamiento por alumno y por día calendario, considerando la zona horaria `America/Argentina/Buenos_Aires`.
+- Cuando el alumno complete la cantidad de estímulos requerida, el sistema avanzará automáticamente a la siguiente semana de planificación.
+- El avance no dependerá de la fecha de inicio ni de la cantidad de días transcurridos.
+- Una semana de planificación podrá completarse en tantos días calendario como necesite el alumno.
+- Al completar los estímulos de la última semana, la rutina pasará automáticamente a estado FINALIZADA.
+- Si existe una rutina PROGRAMADA para ese alumno, se activará automáticamente al finalizar la rutina anterior.
 
-Cada semana posterior comenzará siete días después del inicio de la semana anterior.
+**Ejemplo:**
 
-El avance de semanas será automático y dependerá del calendario, independientemente de la cantidad de entrenamientos realizados por el alumno.
+Una rutina tiene 4 semanas de planificación y 3 estímulos requeridos por semana.
+
+El alumno necesita completar 12 entrenamientos en total. Si tarda 5 días en completar los primeros 3 entrenamientos, recién entonces avanzará a la semana 2. Si tarda 10 días en completar los siguientes 3, avanzará a la semana 3 después de esos 10 días.
+
+En ningún caso el sistema avanzará de semana únicamente porque hayan transcurrido siete días.
 
 ### 6.3. Organización por días de entrenamiento
 
@@ -745,7 +787,28 @@ Estos días representarán sesiones de entrenamiento, no días fijos del calenda
 
 Por ejemplo, una rutina de tres días podrá tener Día 1, Día 2 y Día 3, sin obligar al alumno a entrenar lunes, miércoles y viernes.
 
-El alumno podrá seleccionar cualquiera de los días de entrenamiento correspondientes a su semana actual.
+**Selección y repetición de días de entrenamiento:**
+
+- El alumno podrá seleccionar libremente cualquiera de los días de entrenamiento disponibles en su semana de planificación actual.
+- No será obligatorio realizar los días en un orden determinado.
+- El alumno podrá repetir un mismo día de entrenamiento en fechas diferentes.
+- Cada entrenamiento finalizado contará como un estímulo independiente, aunque corresponda a un día que ya haya realizado.
+- No será necesario completar todos los días de entrenamiento diferentes para avanzar de semana. Será suficiente con completar la cantidad de estímulos requeridos.
+- Solo podrá iniciarse un entrenamiento por alumno y por día calendario, considerando la zona horaria `America/Argentina/Buenos_Aires`.
+- Los entrenamientos en estado EN_CURSO no contabilizarán estímulos hasta que sean finalizados.
+- La selección o repetición de un día de entrenamiento no modificará la planificación original creada por la profesora.
+
+**Ejemplo:**
+
+Una semana de planificación tiene tres días disponibles (Día 1, Día 2 y Día 3) y requiere completar tres estímulos.
+
+El alumno podría realizar:
+
+- Lunes: Día 1.
+- Miércoles: Día 1 nuevamente.
+- Viernes: Día 3.
+
+Al finalizar esas tres sesiones, el sistema avanzará automáticamente a la siguiente semana de planificación, aunque el alumno no haya realizado el Día 2.
 
 ### 6.4. Organización por bloques
 
@@ -850,16 +913,15 @@ La profesora podrá modificar la duración total o la cantidad de días de entre
 
 Se considerará entrenamiento iniciado cualquier sesión registrada, independientemente de que su estado sea EN_CURSO o FINALIZADO.
 
-Una vez iniciado el primer entrenamiento, no se permitirá modificar:
+Una vez que el alumno haya iniciado al menos un entrenamiento de la rutina, la profesora no podrá modificar:
 
-- La duración total de la rutina, expresada en semanas.
-- La cantidad de días de entrenamiento por semana.
+- La cantidad de semanas de planificación.
+- La cantidad de días de entrenamiento disponibles por semana.
+- La cantidad de estímulos requeridos por semana.
 
-Esta restricción se aplicará incluso cuando todos los entrenamientos existentes permanezcan EN_CURSO y ninguno haya sido finalizado.
+Estas restricciones permiten mantener la consistencia del progreso del alumno y de los entrenamientos registrados.
 
-Las modificaciones permitidas sobre ejercicios, bloques, series, repeticiones y pesos recomendados se aplicarán únicamente a los entrenamientos que se inicien posteriormente, conservando la planificación de las sesiones ya iniciadas o finalizadas.
-
-La restricción sobre la duración y la cantidad de días deberá verificarse en el servidor y no depender únicamente de los controles de la interfaz.
+La profesora podrá realizar las modificaciones permitidas sobre la planificación, conservando los registros históricos de los entrenamientos ya iniciados o finalizados.
 
 ### 6.11. Consulta de rutinas
 
@@ -885,68 +947,102 @@ La visualización permitirá identificar:
 - La duración será configurable entre 1 y 6 semanas.
 - La cantidad de días de entrenamiento será configurable entre 1 y 7.
 - Los días de entrenamiento no estarán vinculados a días fijos de la semana.
-- Las semanas avanzarán automáticamente cada siete días.
+- Las semanas de planificación avanzarán automáticamente cuando el alumno complete la cantidad de estímulos requerida para la semana actual.
+- Cada entrenamiento FINALIZADO contará como un estímulo, independientemente del día de entrenamiento seleccionado.
+- Los entrenamientos EN_CURSO no sumarán estímulos hasta su finalización.
+- El avance entre semanas no dependerá de los días transcurridos ni de fechas del calendario.
+- Al completar todos los estímulos de la última semana de planificación, la rutina pasará automáticamente a estado FINALIZADA.
+- Si existe una rutina PROGRAMADA para el alumno, se activará automáticamente al finalizar la rutina anterior.
 - La profesora podrá copiar la planificación entre semanas.
 - Las rutinas podrán guardarse como borradores.
 - Los alumnos no podrán modificar la planificación de sus rutinas.
 - Los entrenamientos finalizados conservarán sus datos históricos aunque posteriormente se modifique la rutina.
 
-### 6.13. Preparación anticipada de rutinas
+### 6.13. Preparación de la próxima rutina
 
-La profesora podrá crear una nueva rutina para un alumno mientras este todavía tenga otra rutina activa.
+La profesora podrá preparar una nueva rutina para un alumno mientras este todavía se encuentra realizando su rutina ACTIVA.
 
-La nueva rutina podrá guardarse como BORRADOR o publicarse con estado PROGRAMADA.
+La nueva rutina podrá guardarse inicialmente en estado BORRADOR, permitiendo continuar su edición antes de dejarla preparada para su activación.
 
-Una rutina programada estará preparada para activarse automáticamente cuando finalice la rutina activa del alumno.
+Cuando la profesora considere que la nueva rutina está lista, podrá establecerla en estado PROGRAMADA.
 
-Las rutinas programadas serán visibles únicamente para la profesora hasta su activación.
+**Reglas:**
 
-Cada alumno podrá tener como máximo:
+- Cada alumno podrá tener como máximo una rutina ACTIVA y una rutina PROGRAMADA al mismo tiempo.
+- Podrán existir varias rutinas en estado BORRADOR.
+- La rutina PROGRAMADA no estará disponible para que el alumno inicie entrenamientos mientras exista una rutina ACTIVA.
+- La rutina PROGRAMADA se activará automáticamente cuando el alumno complete todos los estímulos requeridos de su rutina ACTIVA.
+- La activación no dependerá de una fecha de finalización calculada ni de la cantidad de días transcurridos.
+- Mientras la rutina permanezca en estado PROGRAMADA, la profesora podrá modificar su planificación respetando las reglas de edición correspondientes.
+- Si la rutina ACTIVA finaliza y no existe una rutina PROGRAMADA, el alumno quedará sin rutina activa hasta que la profesora publique una nueva.
 
-- Una rutina ACTIVA.
-- Una rutina PROGRAMADA como próxima rutina.
-- Borradores de rutinas en preparación.
+La preparación anticipada permitirá que el alumno continúe entrenando sin interrupciones cuando complete su planificación actual.
 
 ### 6.14. Activación automática de rutinas programadas
 
-Cuando finalice el período de una rutina activa, el sistema deberá:
+Cuando un alumno complete todos los estímulos requeridos de su rutina ACTIVA, el sistema deberá finalizarla automáticamente.
 
-1. Cambiar su estado a FINALIZADA.
-2. Conservarla en el historial del alumno.
-3. Verificar si existe una rutina PROGRAMADA.
-4. Si existe, activarla automáticamente.
-5. Si no existe, dejar al alumno sin rutina activa hasta que la profesora publique una nueva.
+Si el alumno tiene una rutina en estado PROGRAMADA, esta se activará inmediatamente después de finalizar la anterior.
 
-La nueva rutina comenzará inmediatamente después del período de la anterior, respetando el avance semanal basado en el calendario.
+**Reglas de activación:**
 
-La activación automática no dependerá de que el alumno haya completado todos sus entrenamientos.
+- La finalización de la rutina ACTIVA se producirá cuando se complete el último estímulo de su última semana de planificación.
+- La rutina anterior cambiará automáticamente al estado FINALIZADA.
+- Si existe una rutina PROGRAMADA, cambiará automáticamente al estado ACTIVA.
+- La nueva rutina comenzará en su primera semana de planificación, con cero estímulos completados.
+- La activación no dependerá de fechas estimadas de finalización ni de períodos de siete días.
+- El alumno podrá consultar la nueva rutina activa inmediatamente después de la transición.
+- La transición deberá realizarse de forma atómica, evitando que queden dos rutinas ACTIVA para el mismo alumno.
+- Si no existe una rutina PROGRAMADA, la rutina anterior igualmente pasará a FINALIZADA y el alumno quedará sin rutina activa.
+- Los entrenamientos y registros históricos de la rutina anterior deberán conservarse sin modificaciones.
 
-El sistema deberá garantizar que nunca existan dos rutinas activas simultáneamente para un mismo alumno.
+**Ejemplo:**
 
-### 6.15. Avisos de finalización de rutinas
+Un alumno tiene una rutina ACTIVA de 4 semanas de planificación con 3 estímulos por semana, es decir, 12 estímulos en total.
 
-El sistema mostrará avisos dentro del panel de la profesora cuando una rutina activa esté próxima a finalizar.
+Paulina prepara una nueva rutina y la deja en estado PROGRAMADA.
 
-Los avisos comenzarán cuando falten dos semanas para la finalización de la rutina.
+Cuando el alumno finaliza su entrenamiento número 12, el sistema marca la rutina anterior como FINALIZADA y activa automáticamente la nueva rutina.
 
-Para rutinas de menor duración, el aviso se adaptará automáticamente:
+No importa si el alumno tardó 4, 6 u 8 semanas calendario en completar esos 12 estímulos.
 
-- **Rutinas de 1 semana:** el aviso estará disponible desde el inicio de la rutina.
-- **Rutinas de 2 semanas:** el aviso estará disponible desde el inicio de la rutina.
-- **Rutinas de 3 a 6 semanas:** el aviso aparecerá cuando resten dos semanas completas para finalizar.
+### 6.15. Avisos de próxima finalización de rutinas
 
-Los avisos permitirán consultar:
+El sistema deberá mostrar avisos a la profesora cuando un alumno esté próximo a completar su rutina ACTIVA, para que pueda preparar con anticipación la siguiente planificación.
 
-- Nombre del alumno.
-- Semana actual y duración total de la rutina.
-- Tiempo restante para su finalización.
-- Estado de preparación de la siguiente rutina.
+Los avisos se basarán en la cantidad de estímulos pendientes, no en fechas ni semanas calendario.
 
-Los avisos permanecerán visibles mientras la rutina esté próxima a finalizar y no exista una próxima rutina programada.
+**Configuración de avisos:**
 
-Si ya existe una rutina programada, el sistema mostrará que el siguiente período de entrenamiento está preparado.
+- La profesora podrá configurar para cada rutina la cantidad de estímulos restantes que activará el aviso.
+- El valor predeterminado será de 3 estímulos.
+- El umbral deberá ser un número entero positivo y no podrá superar la cantidad total de estímulos de la rutina.
+- La configuración podrá modificarse mientras la rutina esté ACTIVA.
+- Si la profesora modifica el umbral y la cantidad de estímulos pendientes ya cumple la nueva condición, el aviso deberá generarse.
 
-En el MVP, los avisos se mostrarán dentro de la aplicación, sin correos electrónicos ni notificaciones push.
+**Reglas de funcionamiento:**
+
+- El sistema calculará los estímulos pendientes restando los entrenamientos finalizados de la cantidad total de estímulos requeridos por la rutina.
+- Cuando los estímulos pendientes sean menores o iguales al umbral configurado y mayores que cero, se generará un aviso para la profesora.
+- El aviso aparecerá dentro del panel de la profesora, sin enviar correos electrónicos ni mensajes de WhatsApp.
+- El aviso identificará al alumno, la rutina y la cantidad de estímulos pendientes.
+- No deberán generarse avisos duplicados por cada entrenamiento posterior.
+- El aviso permanecerá visible mientras la rutina continúe ACTIVA y no exista una próxima rutina PROGRAMADA.
+- Cuando la profesora deje preparada una rutina PROGRAMADA para ese alumno, el aviso dejará de mostrarse.
+- Cuando la rutina ACTIVA finalice, el aviso de próxima finalización dejará de mostrarse.
+- Cada rutina tendrá su propio umbral de aviso.
+
+**Ejemplo:**
+
+Un alumno tiene una rutina de 4 semanas de planificación con 3 estímulos por semana, es decir, 12 estímulos en total.
+
+Paulina configura el aviso cuando resten 3 estímulos.
+
+Cuando el alumno finaliza su noveno entrenamiento, quedan 3 estímulos pendientes y el sistema muestra un aviso en el panel de Paulina.
+
+El aviso continuará visible hasta que Paulina prepare una rutina PROGRAMADA o hasta que la rutina actual finalice.
+
+El aviso no dependerá de cuántas semanas calendario haya tardado el alumno en realizar esos entrenamientos.
 
 ### 6.16. Estados de las rutinas
 
@@ -955,9 +1051,18 @@ Las rutinas podrán encontrarse en los siguientes estados:
 - BORRADOR: en preparación y no publicada.
 - PROGRAMADA: publicada, pendiente de activación.
 - ACTIVA: disponible para el alumno.
-- FINALIZADA: período concluido o rutina reemplazada.
+- **FINALIZADA:** rutina que ha concluido porque el alumno completó todos los estímulos requeridos de sus semanas de planificación, o porque fue reemplazada mediante una acción permitida de la profesora. La rutina deja de estar disponible para iniciar nuevos entrenamientos, pero conserva su planificación y todos los registros históricos.
 
 Los cambios de estado deberán respetar las reglas de acceso, publicación y conservación del historial.
+
+**Reglas de transición de estados:**
+
+- Una rutina ACTIVA pasará automáticamente a FINALIZADA cuando el alumno complete todos los estímulos requeridos.
+- Si existe una rutina PROGRAMADA, pasará automáticamente a ACTIVA inmediatamente después de finalizar la anterior.
+- La transición automática no dependerá de fechas de finalización ni de semanas calendario.
+- Cada alumno podrá tener como máximo una rutina ACTIVA y una PROGRAMADA.
+- Las rutinas FINALIZADA conservarán sus entrenamientos, registros de pesos e información histórica.
+- Los cambios de estado deberán respetar las restricciones de permisos y mantener la consistencia de los datos.
 
 
 ## 7. Realización de entrenamientos y registro de pesos
@@ -1054,7 +1159,19 @@ Una vez finalizado, el entrenamiento quedará incorporado al historial del alumn
 
 El alumno podrá realizar un mismo día de entrenamiento más de una vez durante la semana correspondiente.
 
-También podrá repetirlo varias veces en una misma fecha.
+El alumno podrá repetir un mismo día de entrenamiento en fechas diferentes, sin necesidad de haber realizado los demás días disponibles de su semana de planificación.
+
+Cada repetición deberá generar un registro de entrenamiento independiente.
+
+**Reglas:**
+
+- Un mismo día de entrenamiento podrá realizarse varias veces durante una semana de planificación, siempre que cada sesión se inicie en una fecha diferente.
+- El alumno podrá iniciar como máximo un entrenamiento por día calendario, considerando la zona horaria `America/Argentina/Buenos_Aires`.
+- Cada entrenamiento FINALIZADO contabilizará un estímulo para la semana de planificación en la que fue iniciado.
+- Los entrenamientos EN_CURSO no contabilizarán estímulos hasta su finalización.
+- Retomar un entrenamiento EN_CURSO no se considerará iniciar un entrenamiento nuevo.
+- Los pesos registrados y los datos de cada realización deberán conservarse de manera independiente.
+- La repetición de un entrenamiento no modificará la planificación original de la profesora.
 
 Cada realización se registrará como un entrenamiento independiente.
 
@@ -1086,21 +1203,21 @@ Esto incluye la planificación de ejercicios, series, repeticiones y pesos recom
 
 Las modificaciones posteriores de la rutina o de los ejercicios de la biblioteca no alterarán los registros históricos ya finalizados.
 
-### 7.10. Reglas de negocio
+### 7.10. Reglas generales de los entrenamientos
 
-- Solo los alumnos y la profesora podrán registrar entrenamientos.
-- Los alumnos únicamente podrán iniciar nuevos entrenamientos correspondientes a la semana actual de su rutina activa. Podrán continuar y finalizar entrenamientos iniciados anteriormente, aunque la semana o la rutina haya terminado, según las reglas de la sección 11
-- La profesora podrá registrar entrenamientos en nombre de cualquier alumno bajo su administración.
-- Los entrenamientos corresponderán a la semana actual de la rutina.
-- El alumno podrá elegir libremente cualquiera de los días de esa semana.
-- Un mismo día podrá realizarse múltiples veces.
-- Cada realización tendrá un registro independiente.
-- Los pesos se registrarán por serie y en kilogramos.
-- Los alumnos no podrán modificar la planificación establecida por la profesora.
-- Los entrenamientos se considerarán completados únicamente después de la acción de finalización.
-- Los alumnos no podrán editar entrenamientos finalizados.
-- La profesora podrá corregir pesos de entrenamientos finalizados.
-- Los entrenamientos históricos no se alterarán por modificaciones posteriores de las rutinas.
+- El alumno solo podrá iniciar entrenamientos correspondientes a su rutina ACTIVA y a su semana de planificación actual.
+- Podrá elegir libremente cualquiera de los días de entrenamiento disponibles, sin obligación de seguir un orden.
+- Podrá iniciar como máximo un entrenamiento por día calendario, considerando la zona horaria `America/Argentina/Buenos_Aires`.
+- Un entrenamiento iniciado antes de la medianoche podrá finalizarse al día siguiente, sin modificar la fecha en la que fue iniciado.
+- Retomar un entrenamiento EN_CURSO no contará como iniciar una nueva sesión.
+- Cada entrenamiento FINALIZADO contabilizará exactamente un estímulo para la semana de planificación en la que fue iniciado.
+- Los entrenamientos EN_CURSO no contabilizarán estímulos.
+- El alumno podrá repetir un mismo día de entrenamiento en fechas diferentes, generando registros independientes.
+- Cuando se complete la cantidad de estímulos requerida, el sistema avanzará automáticamente a la siguiente semana de planificación.
+- Cuando se completen todos los estímulos de la rutina, esta pasará a FINALIZADA y se activará la rutina PROGRAMADA, si existe.
+- Cada entrenamiento conservará los ejercicios, las series, las repeticiones y los pesos registrados correspondientes a esa realización.
+- Los entrenamientos FINALIZADOS no podrán volver a finalizarse ni contabilizar estímulos adicionales.
+- La finalización de un entrenamiento y la actualización del progreso deberán realizarse de manera consistente, evitando registros duplicados.
 
 ### 7.11. Finalización con pesos incompletos
 
@@ -1338,11 +1455,22 @@ El panel principal mostrará:
 - Acceso a la gestión de rutinas.
 - Alumnos con rutinas próximas a finalizar.
 - Alumnos que necesitan una próxima rutina.
-- Rutinas en borrador o programadas.
+- Rutinas en estado BORRADOR o PROGRAMADA.
 
-Los avisos de finalización de rutinas aparecerán cuando resten dos semanas para terminar, adaptándose a las rutinas de menor duración.
+**Avisos de próxima finalización de rutinas:**
+
+- Los avisos se mostrarán cuando la cantidad de estímulos pendientes de una rutina ACTIVA sea menor o igual al umbral configurado por la profesora.
+- El umbral será configurable para cada rutina y tendrá un valor predeterminado de 3 estímulos.
+- Cada aviso mostrará el alumno correspondiente, la rutina activa y la cantidad de estímulos pendientes.
+- Los avisos permanecerán visibles mientras la rutina continúe ACTIVA y no exista una próxima rutina PROGRAMADA.
+- Cuando la profesora prepare una rutina PROGRAMADA para ese alumno, el aviso dejará de mostrarse.
+- Si la rutina ACTIVA finaliza sin que exista una próxima rutina PROGRAMADA, el alumno aparecerá entre aquellos que necesitan una nueva rutina.
+- El sistema evitará mostrar avisos duplicados para una misma rutina.
+- Los avisos se mostrarán únicamente dentro del panel de la profesora, sin enviar correos electrónicos ni mensajes externos.
 
 El panel permitirá acceder directamente a los alumnos o rutinas relacionados con cada aviso.
+
+La detección de rutinas próximas a finalizar se basará exclusivamente en los estímulos pendientes, independientemente de los días o semanas calendario transcurridos.
 
 ### 9.4. Gestión de alumnos
 
@@ -1384,22 +1512,39 @@ No se implementarán funcionalidades de carga, conversión ni almacenamiento de 
 
 ### 9.6. Gestión de rutinas
 
-La profesora contará con una interfaz para crear y editar rutinas.
+La profesora contará con una interfaz para crear y editar rutinas personalizadas para cada alumno.
 
 El editor permitirá:
 
 - Seleccionar un alumno.
-- Configurar fecha de inicio, duración y cantidad de días.
-- Organizar semanas, días y bloques.
+- Configurar la fecha de inicio de la rutina.
+- Definir la cantidad de semanas de planificación, entre 1 y 6.
+- Definir la cantidad de días de entrenamiento disponibles por semana, entre 1 y 7.
+- Establecer la cantidad de estímulos requeridos por semana, equivalente a la cantidad de días de entrenamiento configurados.
+- Visualizar la cantidad total de estímulos de la rutina, calculada multiplicando las semanas de planificación por los estímulos requeridos por semana.
+- Configurar la cantidad de estímulos restantes para mostrar un aviso de próxima finalización, con un valor predeterminado de 3 estímulos.
+- Organizar semanas de planificación, días de entrenamiento y bloques.
 - Agregar ejercicios desde la biblioteca.
 - Crear ejercicios sin abandonar el editor.
 - Configurar series, repeticiones y pesos recomendados.
 - Copiar planificaciones entre semanas.
-- Guardar borradores.
-- Publicar y programar rutinas.
+- Guardar rutinas en estado BORRADOR.
+- Publicar rutinas y preparar una próxima rutina en estado PROGRAMADA.
 - Modificar rutinas publicadas según las reglas establecidas.
+- Consultar el progreso del alumno según los estímulos completados y pendientes.
 
-La interfaz deberá facilitar la navegación entre semanas y días sin perder los cambios guardados.
+**Reglas del formulario:**
+
+- La cantidad total de estímulos se calculará automáticamente.
+- El umbral de aviso deberá ser un número entero positivo y no podrá superar la cantidad total de estímulos de la rutina.
+- Si una rutina tiene menos de 3 estímulos en total, el valor predeterminado del aviso se ajustará a la cantidad total de estímulos.
+- Una vez que el alumno haya iniciado al menos un entrenamiento de la rutina, no podrán modificarse la cantidad de semanas de planificación, la cantidad de días de entrenamiento ni los estímulos requeridos por semana.
+- La profesora podrá modificar el umbral de aviso mientras la rutina esté ACTIVA.
+- La fecha de inicio no determinará el avance entre semanas de planificación ni la finalización de la rutina.
+
+La interfaz deberá facilitar la navegación entre semanas y días de entrenamiento sin perder los cambios guardados.
+
+Las modificaciones de rutinas publicadas deberán respetar las restricciones establecidas y conservar los registros históricos de los entrenamientos realizados.
 
 ### 9.7. Panel principal del alumno
 
@@ -1408,16 +1553,29 @@ Después de iniciar sesión, el alumno accederá a su panel personal.
 La pantalla principal mostrará:
 
 - Nombre del alumno.
-- Semana actual de su rutina.
-- Duración total de la rutina.
-- Día de entrenamiento sugerido.
-- Días de entrenamiento disponibles.
-- Acceso a entrenamientos en curso.
-- Acceso al historial.
+- Rutina ACTIVA asignada.
+- Semana de planificación actual, determinada por los estímulos completados.
+- Cantidad total de semanas de planificación de la rutina.
+- Cantidad de estímulos completados y pendientes de la semana actual.
+- Cantidad total de estímulos completados y pendientes de la rutina.
+- Día de entrenamiento sugerido, sin que sea obligatorio seguir ese orden.
+- Días de entrenamiento disponibles para la semana actual.
+- Acceso a entrenamientos EN_CURSO.
+- Acceso al historial de entrenamientos realizados.
 
-El alumno podrá seleccionar libremente cualquiera de los días correspondientes a su semana actual.
+**Selección de entrenamientos y visualización del progreso:**
 
-Cuando no tenga una rutina activa, el sistema mostrará un mensaje informativo.
+- El alumno podrá seleccionar libremente cualquiera de los días de entrenamiento disponibles en su semana de planificación actual.
+- Podrá repetir un mismo día de entrenamiento en fechas diferentes, respetando el límite de un entrenamiento iniciado por día calendario.
+- Cada entrenamiento FINALIZADO sumará un estímulo al progreso de la semana correspondiente.
+- Los entrenamientos EN_CURSO no sumarán estímulos hasta su finalización.
+- El panel actualizará el progreso cuando se finalice un entrenamiento.
+- Al completar los estímulos requeridos de una semana, el sistema mostrará automáticamente la siguiente semana de planificación.
+- Al completar todos los estímulos de la rutina, esta pasará a FINALIZADA y, si existe una rutina PROGRAMADA, el alumno podrá acceder a ella como su nueva rutina ACTIVA.
+
+El avance de las semanas de planificación y la finalización de la rutina no dependerán de fechas ni de semanas calendario.
+
+Cuando el alumno no tenga una rutina ACTIVA, el sistema mostrará un mensaje informativo indicando que no tiene una rutina disponible para realizar entrenamientos.
 
 ### 9.8. Pantalla de entrenamiento
 
@@ -1634,6 +1792,16 @@ Las validaciones incluirán:
 - Pesos numéricos no negativos.
 - Validación de las URLs de YouTube asociadas a los ejercicios, cuando se proporcione un enlace.
 - Permisos para realizar modificaciones.
+- La cantidad de semanas de planificación deberá estar entre 1 y 6.
+- La cantidad de días de entrenamiento disponibles deberá estar entre 1 y 7.
+- La cantidad de estímulos requeridos por semana será igual a la cantidad de días de entrenamiento configurados.
+- El umbral de aviso de próxima finalización deberá ser un número entero positivo y no podrá superar la cantidad total de estímulos de la rutina.
+- El sistema deberá impedir que un alumno inicie más de un entrenamiento en un mismo día calendario, considerando la zona horaria `America/Argentina/Buenos_Aires`.
+- Retomar un entrenamiento EN_CURSO no deberá considerarse el inicio de una nueva sesión.
+- Un entrenamiento FINALIZADO no podrá finalizarse nuevamente ni sumar estímulos adicionales.
+- Los entrenamientos EN_CURSO no deberán contabilizarse como estímulos completados.
+- El sistema deberá impedir que el progreso de una semana supere la cantidad de estímulos requeridos.
+- El avance de semana y la finalización de la rutina deberán producirse únicamente cuando se completen los estímulos correspondientes.
 
 Los campos de peso utilizados durante un entrenamiento podrán quedar vacíos.
 
@@ -1663,6 +1831,15 @@ Se deberán cumplir las siguientes condiciones:
 - Los entrenamientos finalizados conservarán su información histórica.
 - Las correcciones de pesos históricos generarán registros de auditoría.
 - La activación automática de rutinas no deberá producir dos rutinas activas simultáneamente.
+- Cada entrenamiento podrá contabilizarse como estímulo una única vez, cuando cambie de EN_CURSO a FINALIZADO.
+- La finalización de un entrenamiento deberá ser idempotente: repetir una solicitud de finalización no podrá generar estímulos adicionales ni duplicar registros.
+- La actualización del estado del entrenamiento y del progreso de la rutina deberá realizarse en una misma transacción.
+- El sistema deberá verificar que el entrenamiento pertenece a la rutina ACTIVA y a la semana de planificación correspondiente antes de contabilizarlo.
+- El progreso de una semana no podrá superar la cantidad de estímulos requeridos.
+- Cuando se complete el último estímulo de una semana, el avance a la siguiente deberá realizarse de forma atómica.
+- Cuando se complete el último estímulo de la rutina, su finalización y la activación de la rutina PROGRAMADA, si existe, deberán realizarse de forma atómica.
+- El sistema deberá evitar que dos solicitudes simultáneas produzcan avances duplicados o activen más de una rutina.
+- Los registros históricos de entrenamientos y pesos deberán conservarse independientemente de los cambios de semana o de rutina.
 
 Las operaciones que modifiquen información relacionada deberán preservar la consistencia de los datos, incluso ante errores o solicitudes simultáneas.
 
@@ -1752,19 +1929,61 @@ Su objetivo es definir el comportamiento del sistema ante situaciones excepciona
 
 ### 11.1. Entrenamientos en curso al cambiar de semana
 
-Los entrenamientos iniciados durante una semana podrán continuar y finalizarse aunque el sistema haya avanzado automáticamente a la semana siguiente.
+Las semanas de planificación no avanzarán automáticamente por el paso del tiempo, sino cuando el alumno complete la cantidad de estímulos requerida.
 
-No se permitirá iniciar nuevos entrenamientos correspondientes a semanas anteriores.
+Los entrenamientos en estado EN_CURSO no contabilizarán estímulos hasta que sean finalizados.
 
-Los entrenamientos que continúen abiertos conservarán su asociación con la semana y el día en los que fueron iniciados.
+**Reglas:**
+
+- Cada entrenamiento conservará su asociación con la semana de planificación y el día de entrenamiento en los que fue iniciado.
+- Un entrenamiento EN_CURSO podrá retomarse y finalizarse en una fecha posterior a la de su inicio.
+- Retomar un entrenamiento EN_CURSO no se considerará iniciar un nuevo entrenamiento.
+- Un entrenamiento iniciado antes de la medianoche podrá finalizarse al día siguiente, conservando su fecha de inicio original.
+- La finalización de un entrenamiento contabilizará exactamente un estímulo para la semana de planificación en la que fue iniciado.
+- Si ese estímulo completa la cantidad requerida para la semana actual, el sistema avanzará automáticamente a la siguiente semana de planificación.
+- No se permitirá iniciar nuevos entrenamientos correspondientes a semanas de planificación anteriores.
+- El cambio de semana no modificará los registros históricos de los entrenamientos realizados.
+
+**Ejemplo:**
+
+Un alumno se encuentra en la semana 2 de planificación y necesita completar 3 estímulos.
+
+Ya finalizó 2 entrenamientos y comienza el tercero un lunes, pero lo deja EN_CURSO.
+
+El sistema permanecerá en la semana 2 hasta que finalice ese entrenamiento.
+
+Si lo retoma y finaliza el martes, se contabilizará el tercer estímulo y el sistema avanzará automáticamente a la semana 3.
+
+El entrenamiento conservará su fecha de inicio del lunes y su asociación con la semana 2.
 
 ### 11.2. Entrenamientos en curso al finalizar una rutina
 
-Cuando una rutina llegue a su fecha de finalización, los entrenamientos que ya se encuentren en curso podrán continuar hasta que el alumno los finalice.
+Una rutina ACTIVA finalizará automáticamente cuando el alumno complete todos los estímulos requeridos de sus semanas de planificación, independientemente del tiempo calendario transcurrido.
 
-Los entrenamientos conservarán su asociación con la rutina original, incluso cuando esta ya se encuentre finalizada.
+En condiciones normales, la rutina no podrá finalizar automáticamente mientras exista un entrenamiento EN_CURSO pendiente de contabilizar, ya que cada alumno podrá iniciar como máximo un entrenamiento por día y el avance dependerá de las sesiones finalizadas.
 
-La finalización de una rutina no permitirá iniciar nuevos entrenamientos correspondientes a ella.
+Sin embargo, si la profesora reemplaza una rutina antes de que el alumno complete todos sus estímulos, podrían existir entrenamientos EN_CURSO asociados a la rutina anterior.
+
+**Reglas:**
+
+- Los entrenamientos EN_CURSO podrán retomarse y finalizarse aunque su rutina original haya pasado a estado FINALIZADA por un reemplazo realizado por la profesora.
+- Estos entrenamientos conservarán su asociación con la rutina, la semana de planificación y el día de entrenamiento en los que fueron iniciados.
+- La finalización de un entrenamiento perteneciente a una rutina reemplazada conservará sus registros históricos, pero no modificará el progreso de la nueva rutina ACTIVA.
+- Los entrenamientos de una rutina reemplazada no podrán provocar avances de semana ni activar nuevas rutinas.
+- No se permitirá iniciar nuevos entrenamientos correspondientes a una rutina FINALIZADA.
+- Retomar un entrenamiento EN_CURSO no se considerará iniciar un nuevo entrenamiento.
+- Los pesos registrados y demás datos de cada entrenamiento deberán conservarse.
+- La finalización de un entrenamiento y la conservación de sus registros deberán realizarse sin duplicaciones.
+
+**Ejemplo:**
+
+Un alumno tiene una rutina ACTIVA y comienza un entrenamiento, pero lo deja EN_CURSO.
+
+Posteriormente, Paulina decide reemplazar esa rutina por otra.
+
+La rutina anterior pasa a FINALIZADA y la nueva pasa a ACTIVA.
+
+El alumno podrá retomar y finalizar el entrenamiento pendiente de la rutina anterior. Ese entrenamiento quedará registrado en su historial, pero no sumará estímulos a la nueva rutina ni modificará su semana de planificación.
 
 ### 11.3. Reemplazo de una rutina activa
 
@@ -1796,18 +2015,24 @@ Las modificaciones no deberán alterar los datos ya registrados por el alumno du
 
 ### 11.5. Duración y carga de videos
 
-La aplicación permitirá reproducir los videos explicativos asociados a los ejercicios.
+La aplicación permitirá reproducir videos explicativos asociados a los ejercicios mediante enlaces de YouTube.
 
-La implementación dependerá del proveedor seleccionado:
+**Reglas de funcionamiento:**
 
-- Si se utiliza YouTube, los videos se reproducirán mediante un mecanismo compatible con su plataforma.
-- Si se utiliza Supabase Storage, los archivos se almacenarán y entregarán mediante mecanismos de acceso autorizado.
+- La profesora podrá agregar o modificar el enlace de YouTube asociado a cada ejercicio.
+- Los videos se reproducirán mediante un reproductor integrado compatible con YouTube.
+- Los alumnos podrán visualizar los videos desde la descripción de los ejercicios correspondientes.
+- El sistema deberá validar que los enlaces ingresados correspondan a URLs de YouTube compatibles con la reproducción integrada.
+- La aplicación deberá funcionar en navegadores modernos de dispositivos Android, iPhone y computadoras.
+- Si un video no está disponible, fue eliminado o tiene restricciones de reproducción, el sistema deberá mostrar un mensaje comprensible.
+- La disponibilidad y reproducción de los videos dependerán de las condiciones y restricciones establecidas por YouTube.
 
-La aplicación deberá funcionar en navegadores modernos de dispositivos Android, iPhone y computadoras.
+**Alcance del MVP:**
 
-Los errores de reproducción deberán comunicarse mediante mensajes comprensibles.
-
-La decisión sobre el proveedor y las condiciones específicas de privacidad continúa pendiente de confirmación por parte de Paulina.
+- No se permitirá subir archivos de video directamente a la aplicación.
+- No se utilizará Supabase Storage para almacenar videos.
+- No se implementarán funciones de edición, conversión ni procesamiento de archivos de video.
+- No se establecerá un límite de duración propio de la aplicación, ya que los videos estarán alojados en YouTube.
 
 ### 11.6. Publicación y programación de rutinas
 
@@ -1854,60 +2079,100 @@ Cuando la profesora cree la primera rutina de un alumno, podrá seleccionar su f
 - Si la fecha seleccionada es el día actual, la rutina se activará al publicarla.
 - Si la fecha seleccionada es futura, la rutina quedará en estado PROGRAMADA hasta su fecha de inicio.
 - La fecha de inicio no podrá ser anterior a la fecha actual al momento de publicar.
+- Cuando llegue la fecha de inicio programada, el sistema activará automáticamente la rutina.
+- La activación por fecha se utilizará únicamente cuando el alumno no tenga una rutina ACTIVA y se haya definido expresamente una fecha futura de inicio.
 
 **Programación de la próxima rutina**
 
-Cuando un alumno tenga una rutina activa y la profesora prepare una nueva para continuar su planificación:
+Cuando un alumno tenga una rutina ACTIVA y la profesora prepare una nueva para continuar su planificación:
 
-- El sistema calculará automáticamente la fecha de inicio de la próxima rutina.
-- La nueva rutina comenzará el día siguiente al último día de la rutina actual.
-- La profesora no necesitará calcular ni ingresar manualmente esa fecha.
-- La próxima rutina permanecerá en estado PROGRAMADA hasta su activación.
-- El sistema activará automáticamente la nueva rutina cuando corresponda.
+- La profesora podrá crear la nueva rutina y guardarla inicialmente en estado BORRADOR.
+- Cuando esté lista, podrá establecerla en estado PROGRAMADA.
+- La próxima rutina no tendrá una fecha de activación calculada a partir de la duración de la rutina anterior.
+- La rutina PROGRAMADA permanecerá pendiente hasta que el alumno complete todos los estímulos requeridos de su rutina ACTIVA.
+- Al finalizar el último estímulo de la rutina actual, el sistema activará automáticamente la rutina PROGRAMADA.
+- La activación será inmediata y no dependerá de los días calendario transcurridos.
+- La nueva rutina comenzará en su primera semana de planificación, con cero estímulos completados.
 
 **Finalización de una rutina**
 
-La duración de una rutina se calculará en semanas consecutivas de siete días, a partir de su fecha de inicio.
+La duración real de una rutina dependerá del ritmo con el que el alumno complete los estímulos requeridos.
 
-Cuando finalice el último día de la rutina:
+Las semanas de planificación no representarán períodos obligatorios de siete días calendario.
 
-- La rutina pasará al estado FINALIZADA.
-- Si existe una próxima rutina PROGRAMADA, se activará automáticamente en la fecha correspondiente.
-- Si no existe una próxima rutina, el alumno quedará temporalmente sin rutina activa.
-- Los entrenamientos finalizados y el historial de la rutina anterior permanecerán disponibles.
+Cuando el alumno complete el último estímulo de la última semana de planificación:
+
+- La rutina pasará automáticamente al estado FINALIZADA.
+- Si existe una próxima rutina PROGRAMADA, se activará automáticamente.
+- Si no existe una próxima rutina, el alumno quedará temporalmente sin rutina ACTIVA.
+- Los entrenamientos finalizados, los pesos registrados y el historial de la rutina anterior permanecerán disponibles.
+- La finalización y la activación de la próxima rutina deberán realizarse de forma atómica para evitar inconsistencias.
+
+La profesora también podrá reemplazar anticipadamente una rutina ACTIVA, respetando las reglas de reemplazo y conservación de entrenamientos históricos establecidas en el sistema.
 
 **Alumno sin rutina activa**
 
-Cuando un alumno no tenga una rutina activa, la aplicación mostrará un mensaje informativo:
+Cuando un alumno no tenga una rutina ACTIVA, la aplicación mostrará un mensaje informativo:
 
 "Por el momento no tenés una rutina disponible. Tu profesora te asignará una nueva planificación próximamente."
 
-El alumno podrá seguir consultando su historial, pero no podrá iniciar nuevos entrenamientos hasta que tenga una rutina activa. Si conserva entrenamientos iniciados anteriormente, podrá reanudarlos y finalizarlos según las reglas establecidas en los apartados 11.1 y 11.2.
+El alumno podrá seguir consultando su historial, pero no podrá iniciar nuevos entrenamientos hasta que tenga una rutina ACTIVA.
+
+Si conserva entrenamientos iniciados anteriormente, podrá reanudarlos y finalizarlos según las reglas establecidas en los apartados 11.1 y 11.2.
+
+Si tiene una primera rutina PROGRAMADA con fecha de inicio futura, el sistema podrá informarle que su planificación todavía no se encuentra disponible.
 
 **Reglas de consistencia**
 
-- Un alumno nunca podrá tener dos rutinas activas simultáneamente.
-- Un alumno podrá tener como máximo una rutina programada.
+- Un alumno nunca podrá tener dos rutinas ACTIVA simultáneamente.
+- Un alumno podrá tener como máximo una rutina PROGRAMADA.
+- La activación automática de una primera rutina con fecha futura deberá comprobar que el alumno no tenga otra rutina ACTIVA.
+- Las rutinas PROGRAMADAS como continuación de una rutina ACTIVA se activarán al completarse los estímulos de la rutina anterior, no mediante fechas calculadas.
+- El avance de las semanas de planificación dependerá exclusivamente de los estímulos completados.
 - La transición automática entre rutinas deberá preservar la información histórica.
-- Los entrenamientos que ya estuvieran en curso podrán finalizarse según las reglas de los apartados 11.1 y 11.2.
-- Las fechas y los cambios de estado deberán calcularse de manera consistente según la zona horaria configurada para la aplicación.
+- Los entrenamientos que ya estuvieran EN_CURSO podrán finalizarse según las reglas de los apartados 11.1 y 11.2.
+- Las fechas de inicio y los límites diarios de entrenamiento se interpretarán utilizando la zona horaria `America/Argentina/Buenos_Aires`.
+- Los cambios automáticos de estado deberán ejecutarse de manera consistente, evitando activaciones duplicadas.
 
 ### 11.10. Reprogramación automática ante el reemplazo de una rutina activa
 
-Cuando la profesora reemplace inmediatamente una rutina activa y el alumno ya tenga una próxima rutina en estado PROGRAMADA, el sistema deberá conservar esa rutina programada.
+Cuando la profesora reemplace anticipadamente una rutina ACTIVA y el alumno ya tenga una próxima rutina en estado PROGRAMADA, el sistema deberá conservar esa rutina programada.
 
-Se aplicarán las siguientes reglas:
+**Reglas de funcionamiento:**
 
-- La rutina activa anterior pasará al estado FINALIZADA.
-- La nueva rutina se activará inmediatamente.
+- La rutina ACTIVA anterior pasará al estado FINALIZADA por reemplazo anticipado.
+- La nueva rutina seleccionada por la profesora pasará inmediatamente al estado ACTIVA.
 - La rutina que ya estaba PROGRAMADA conservará su planificación y su estado.
-- El sistema recalculará automáticamente su fecha de inicio para que comience el día siguiente al último día de la nueva rutina activa.
-- La profesora no necesitará modificar manualmente la fecha de la rutina programada.
-- Antes de confirmar el reemplazo, el sistema informará que la fecha de inicio de la próxima rutina será ajustada automáticamente.
-- La operación deberá garantizar que el alumno tenga como máximo una rutina ACTIVA y una PROGRAMADA.
-- Los entrenamientos históricos y los entrenamientos que ya estuvieran en curso conservarán su asociación con la rutina original.
+- La rutina PROGRAMADA se activará automáticamente cuando el alumno complete todos los estímulos requeridos de la nueva rutina ACTIVA.
+- No se calcularán ni modificarán fechas de activación en función de la duración de las rutinas.
+- Antes de confirmar el reemplazo, el sistema informará a la profesora que la rutina PROGRAMADA existente se conservará y se activará al finalizar la nueva rutina.
+- La operación deberá garantizar que el alumno tenga como máximo una rutina ACTIVA y una rutina PROGRAMADA.
+- Los entrenamientos históricos y los entrenamientos EN_CURSO conservarán su asociación con la rutina original.
+- Los entrenamientos EN_CURSO de la rutina reemplazada podrán finalizarse según las reglas de la sección 11.2, sin modificar el progreso de la nueva rutina.
+- El reemplazo deberá realizarse de forma atómica para evitar estados inconsistentes.
 
-El recálculo de fechas no modificará los ejercicios, bloques, series, repeticiones ni pesos recomendados de la rutina programada.
+**Conservación de la planificación:**
+
+El reemplazo de la rutina ACTIVA no modificará los ejercicios, bloques, series, repeticiones, pesos recomendados ni la configuración de estímulos de la rutina PROGRAMADA.
+
+**Ejemplo:**
+
+Un alumno tiene:
+
+- Rutina A: ACTIVA.
+- Rutina B: PROGRAMADA.
+
+Paulina decide reemplazar anticipadamente la rutina A por una nueva rutina C.
+
+Después del reemplazo:
+
+- Rutina A: FINALIZADA.
+- Rutina C: ACTIVA.
+- Rutina B: PROGRAMADA.
+
+Cuando el alumno complete todos los estímulos de la rutina C, esta pasará a FINALIZADA y la rutina B se activará automáticamente.
+
+La rutina B no necesitará una nueva fecha de inicio calculada.
 
 ### 11.11. Conversión automática y compatibilidad de videos
 
