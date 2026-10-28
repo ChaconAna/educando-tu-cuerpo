@@ -33,8 +33,8 @@ export default function LoginPage() {
 
       // La validación del perfil y la redirección
       // se implementarán en el siguiente paso.
-      router.refresh();
-      setError("Sesión iniciada. Estamos preparando tu panel.");
+    router.replace("/profesora");
+    router.refresh();
     } catch {
       setError("Ocurrió un error. Intentá nuevamente.");
     } finally {
