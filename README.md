@@ -16,6 +16,27 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Listado de alumnos
+
+La ruta `/profesora/alumnos` requiere una profesora activa. Consulta los perfiles
+con la sesión del usuario y las políticas RLS existentes. La columna `phone`
+debe estar disponible mediante la migración existente que la agrega.
+
+Para mostrar correos de Supabase Auth, configurá `SUPABASE_SERVICE_ROLE_KEY`
+en `.env.local` y en las variables del servidor de despliegue. Usá la clave
+`service_role` del mismo proyecto que `NEXT_PUBLIC_SUPABASE_URL`. No uses un
+prefijo `NEXT_PUBLIC_` para esa clave, no la incluyas en el repositorio ni la
+envíes al navegador. Reiniciá el servidor después de configurarla.
+
+Si falta la clave o falla Auth, el listado conserva los demás datos y avisa
+que los correos no están disponibles. No se realizan escrituras en Supabase.
+
+Las pruebas usan datos simulados y no se conectan a Supabase:
+
+```bash
+node --test tests/students.test.mjs
+```
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.

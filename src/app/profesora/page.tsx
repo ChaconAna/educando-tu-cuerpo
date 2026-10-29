@@ -1,5 +1,6 @@
 
 import { requireProfesora } from "@/lib/auth";
+import Link from "next/link";
 
 import LogoutButton from "@/components/BotonSalir";
 
@@ -20,6 +21,13 @@ export default async function ProfesoraPage() {
         <p className="text-zinc-600">
           Este es tu espacio de administración de Educando tu cuerpo.
         </p>
+
+        <Link
+          href="/profesora/alumnos"
+          className="mt-6 inline-block rounded-lg bg-emerald-700 px-6 py-3 font-semibold text-white hover:bg-emerald-800"
+        >
+          Ver alumnos
+        </Link>
 
         <div className="mt-8 rounded-xl bg-emerald-50 p-5">
           <h2 className="mb-2 font-semibold text-emerald-900">
